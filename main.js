@@ -13,7 +13,41 @@ function CSSGradientHandler(selection) {
       return false;
     })
     .filter(item => item);
-  console.log(css.join('\n'));
+
+  document.body.appendChild(createDialog(css.join('\n'))).showModal();
+}
+
+function createDialog(str) {
+  //  create the dialog
+  const dialog = document.createElement('dialog');
+
+  //  create the form element
+  //  the form element has default styling and spacing
+  let form = document.createElement('form');
+  dialog.appendChild(form);
+  //  don't forget to set your desired width
+  form.style.width = 360;
+  form.style.height = 240;
+
+  //  add your content
+  let hello = document.createElement('textarea');
+  hello.textContent = str;
+  hello.style.width = 360;
+  hello.style.height = 240;
+  hello.style.boxSizing = 'border-box';
+  form.appendChild(hello);
+
+  //  create a footer to hold your form submit and cancel buttons
+  let footer = document.createElement('footer');
+  form.appendChild(footer)
+  //  include at least one way to close the dialog
+  let closeButton = document.createElement('button');
+  closeButton.uxpVariant = 'cta';
+  closeButton.textContent = 'Close';
+  closeButton.onclick = () => dialog.close();
+  footer.appendChild(closeButton);
+
+  return dialog;
 }
 
 /**
