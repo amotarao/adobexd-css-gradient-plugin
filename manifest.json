@@ -1,0 +1,16 @@
+{
+  "id": "CSS_GRADIENT_EXAMPLE",
+  "name": "CSS Gradient plugin",
+  "host": {
+    "app": "XD",
+    "minVersion": "13.0.0"
+  },
+  "version": "0.0.1",
+  "uiEntryPoints": [
+    {
+      "type": "menu",
+      "label": "CSS Gradient",
+      "commandId": "CSSGradient"
+    }
+  ]
+}
