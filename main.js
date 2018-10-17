@@ -17,7 +17,12 @@ function CSSGradientHandler(selection) {
   document.body.appendChild(createDialog(css.join('\n'))).showModal();
 }
 
-function createDialog(str) {
+/**
+ * ダイアログを生成する
+ * Referenced: https://github.com/AdobeXD/plugin-samples/tree/master/ui-hello
+ * @param {string} text テキストエリアにいれる文字列
+ */
+function createDialog(text) {
   //  create the dialog
   const dialog = document.createElement('dialog');
 
@@ -31,7 +36,7 @@ function createDialog(str) {
 
   //  add your content
   let hello = document.createElement('textarea');
-  hello.textContent = str;
+  hello.textContent = text;
   hello.style.width = 360;
   hello.style.height = 240;
   hello.style.boxSizing = 'border-box';
