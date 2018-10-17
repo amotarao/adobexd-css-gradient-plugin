@@ -65,8 +65,7 @@ function getRectLinearGradient(rect) {
 
   const colors = rect.fill.colorStops
     .map(point => {
-      // 色の10進数の数値を16進数の文字列に変更
-      const color = toRGBA(point.color.value.toString(16));
+      const color = toRGBA(point.color.value);
       return `${color} ${point.stop * 100}%`;
     })
     .join(', ');
@@ -80,14 +79,14 @@ function getRectLinearGradient(rect) {
 
 /**
  * 16進数のカラーコードをrgba()に変換
- * @param {string} colorCode 変換するカラーコード
+ * @param {number} colorNumber 変換する色数値
  */
-function toRGBA(colorCode) {
-  const chars = colorCode.split('');
-  const a = parseInt(`${chars[0]}${chars[1]}`, 16);
-  const r = parseInt(`${chars[2]}${chars[3]}`, 16);
-  const g = parseInt(`${chars[4]}${chars[5]}`, 16);
-  const b = parseInt(`${chars[6]}${chars[7]}`, 16);
+function toRGBA(colorNumber) {
+  const code = colorNumber.toString(16);
+  const a = parseInt(code.slice(0, 2), 16).toString();
+  const r = parseInt(code.slice(2, 4), 16).toString();
+  const g = parseInt(code.slice(4, 6), 16).toString();
+  const b = parseInt(code.slice(6, 8), 16).toString();
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
