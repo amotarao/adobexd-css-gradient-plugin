@@ -17,12 +17,7 @@ function CSSGradientHandler(selection) {
   document.body.appendChild(createDialog(css.join('\n'))).showModal();
 }
 
-/**
- * ダイアログを生成する
- * Referenced: https://github.com/AdobeXD/plugin-samples/tree/master/ui-hello
- * @param {string} text テキストエリアにいれる文字列
- */
-function createDialog(text) {
+function createDialog(str) {
   //  create the dialog
   const dialog = document.createElement('dialog');
 
@@ -36,7 +31,7 @@ function createDialog(text) {
 
   //  add your content
   let hello = document.createElement('textarea');
-  hello.textContent = text;
+  hello.textContent = str;
   hello.style.width = 360;
   hello.style.height = 240;
   hello.style.boxSizing = 'border-box';
@@ -70,7 +65,8 @@ function getRectLinearGradient(rect) {
 
   const colors = rect.fill.colorStops
     .map(point => {
-      const color = toRGBA(point.color.value);
+      // 色の10進数の数値を16進数の文字列に変更
+      const color = toRGBA(point.color.value.toString(16));
       return `${color} ${point.stop * 100}%`;
     })
     .join(', ');
@@ -84,14 +80,14 @@ function getRectLinearGradient(rect) {
 
 /**
  * 16進数のカラーコードをrgba()に変換
- * @param {number} colorNumber 変換する色数値
+ * @param {string} colorCode 変換するカラーコード
  */
-function toRGBA(colorNumber) {
-  const code = colorNumber.toString(16);
-  const a = parseInt(code.slice(0, 2), 16);
-  const r = parseInt(code.slice(2, 2), 16);
-  const g = parseInt(code.slice(4, 2), 16);
-  const b = parseInt(code.slice(6, 2), 16);
+function toRGBA(colorCode) {
+  const chars = colorCode.split('');
+  const a = parseInt(`${chars[0]}${chars[1]}`, 16);
+  const r = parseInt(`${chars[2]}${chars[3]}`, 16);
+  const g = parseInt(`${chars[4]}${chars[5]}`, 16);
+  const b = parseInt(`${chars[6]}${chars[7]}`, 16);
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
