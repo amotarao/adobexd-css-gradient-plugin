@@ -60,14 +60,7 @@ function createDialog(text) {
  * @param {Rectangle} 求めるRectangle
  */
 function getRectLinearGradient(rect) {
-
-  // degを求める
-  const startX = rect.width * rect.fill.startX;
-  const startY = rect.height * rect.fill.startY;
-  const endX = rect.width * rect.fill.endX;
-  const endY = rect.height * rect.fill.endY;
-  const deg = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI + 90;
-
+  const deg = toDeg(rect.width, rect.height, rect.fill.startX, rect.fill.startY, rect.fill.endX, rect.fill.endY);
   const colors = rect.fill.colorStops
     .map(point => {
       const color = toCssRgba(point.color);
@@ -79,7 +72,24 @@ function getRectLinearGradient(rect) {
 .${rect.name} {
   background: linear-gradient(${deg}deg, ${colors});
 }`;
+}
 
+/**
+ * linear-gradient用のdegを求める
+ * @param {number} width 図形の幅
+ * @param {number} height 図形の高さ
+ * @param {number} x1 始点の座標x
+ * @param {number} y1 始点の座標y
+ * @param {number} x2 終点の座標x
+ * @param {number} y2 終点の座標y
+ */
+function toDeg(width, height, x1, y1, x2, y2) {
+  const startX = width * x1;
+  const startY = height * y1;
+  const endX = width * x2;
+  const endY = height * y2;
+  const deg = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI + 90;
+  return deg;
 }
 
 /**
